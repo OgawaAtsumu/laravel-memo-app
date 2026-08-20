@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Category;
 use App\Models\Memo;
+use Illuminate\Http\Request;
+
 
 class MemoController extends Controller
 {
@@ -18,8 +20,9 @@ class MemoController extends Controller
         return view('memos', compact('memos','keyword'));
     }
 
-        public function create(){
-    return view('memo_create');
+    public function create(){
+        $categories = Category::all();
+        return view('memo_create',compact('categories'));
     }
 
     public function store(Request $request){
