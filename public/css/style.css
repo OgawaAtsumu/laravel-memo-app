@@ -170,7 +170,8 @@ textarea {
     line-height: 1;
 }
 
-.search-keyword {
+.search-keyword,
+.search-category {
     color: #555;
     font-size: 14px;
     margin-bottom: 20px;
@@ -243,4 +244,45 @@ textarea {
     color: #aaa;
     pointer-events: none;
     background-color: #f5f5f5;
+}
+
+.memo-category {
+    display: inline-block;
+    margin: 0 0 10px;
+    padding: 5px 10px;
+    background-color: #eef3f8;
+    color: #34495e;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.category-work {
+    background-color: #fdecea;
+    color: #c0392b;
+}
+
+.category-study {
+    background-color: #eaf2fb;
+    color: #2980b9;
+}
+
+.category-private {
+    background-color: #eafaf1;
+    color: #27864f;
+}
+
+.category-other {
+    background-color: #f2f3f4;
+    color: #5d6d7e;
+}
+
+.category-unset {
+    background-color: #f5f5f5;
+    color: #999999;
+}
+
+.search-form select {
+    width: 180px;
+    flex-shrink: 0;
 }

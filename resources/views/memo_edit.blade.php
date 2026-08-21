@@ -102,6 +102,19 @@
             @method('PUT')
 
             <div class="form-group">
+                <label for="category_id">カテゴリ</label>
+                <select id="category_id" name="category_id">
+                <option value="">カテゴリを選択してください</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}"{{ old('category_id', $memo->category_id) == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+
+            <div class="form-group">
                 <label>タイトル</label>
                 <input type="text" name="title" value="{{ old('title', $memo->title) }}">
             </div>
