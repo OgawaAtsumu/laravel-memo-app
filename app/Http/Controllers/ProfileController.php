@@ -2,80 +2,59 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-/*use App\Models\Memo;*/
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    public function index(){
-    $name = "小川";
-       $hobbies = [
-            'ゲーム',
-            'サッカー',
-            '勉強',
-        ];
-    return view('profile', compact('name','hobbies'));
-    //return view('profile', compact('name'));
+    /**
+     * Display the user's profile form.
+     */
+    public function edit(Request $request): View
+    {
+        return view('profile.edit', [
+            'user' => $request->user(),
+        ]);
     }
 
-    public function about(){
-    return view('about');
+    /**
+     * Update the user's profile information.
+     */
+    public function update(ProfileUpdateRequest $request): RedirectResponse
+    {
+        $request->user()->fill($request->validated());
+
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
+        }
+
+        $request->user()->save();
+
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    /*public function memos(){
-    $memos = Memo::all();
-    return view('memos', compact('memos'));
+    /**
+     * Delete the user's account.
+     */
+    public function destroy(Request $request): RedirectResponse
+    {
+        $request->validateWithBag('userDeletion', [
+            'password' => ['required', 'current_password'],
+        ]);
+
+        $user = $request->user();
+
+        Auth::logout();
+
+        $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return Redirect::to('/');
     }
-
-    public function create(){
-    return view('memo_create');
-    }
-
-    public function store(Request $request){
-    $request->validate([
-        'title' => 'required|max:255',
-        'content' => 'required|max:1000',
-    ],[
-        'title.required'=>'タイトルは必須です。',
-        'title.max' => 'タイトルは255文字以内で入力してください。',
-        'content.required'=>'内容は必須です。',
-        'content.max' => '内容は1000文字以内で入力してください。',
-    ]);
-
-    Memo::create([
-        'title' => $request->title,
-        'content' => $request->content
-    ]);
-    return redirect('/memos');
-    }
-
-    public function destroy($id){
-    $memo = Memo::find($id);
-    $memo->delete();
-    return redirect('/memos');
-    }
-
-    public function edit($id){
-    $memo = Memo::find($id);
-    return view('memo_edit', compact('memo'));
-    }
-
-    public function update(Request $request, $id){
-    $request->validate([
-        'title' => 'required|max:255',
-        'content' => 'required|max:1000',
-    ],[
-        'title.required'=>'タイトルは必須です。',
-        'title.max' => 'タイトルは255文字以内で入力してください。',
-        'content.required'=>'内容は必須です。',
-        'content.max' => '内容は1000文字以内で入力してください。',
-    ]);
-    $memo = Memo::find($id);
-    $memo->update([
-        'title' => $request->title,
-        'content' => $request->content
-    ]);
-    return redirect('/memos');
-    }*/
-
 }

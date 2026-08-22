@@ -286,3 +286,78 @@ textarea {
     width: 180px;
     flex-shrink: 0;
 }
+
+.user-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 12px 15px;
+    background-color: #f4f6f7;
+    border-radius: 6px;
+}
+
+.user-area form {
+    margin: 0;
+}
+
+.login-user {
+    margin: 0;
+    color: #34495e;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.logout-button {
+    background-color: #7f8c8d;
+    color: white;
+}
+
+.logout-button:hover {
+    background-color: #626f70;
+}
+
+.home-user-area {
+    margin-top: 25px;
+}
+
+.home-button-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.home-button-area form {
+    margin: 0;
+}
+
+.login-button,
+.register-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 15px;
+    line-height: 1;
+}
+
+.login-button {
+    background-color: #3498db;
+}
+
+.register-button {
+    background-color: #2ecc71;
+}
+
+.login-button:hover {
+    background-color: #2980b9;
+}
+
+.register-button:hover {
+    background-color: #27ae60;
+}

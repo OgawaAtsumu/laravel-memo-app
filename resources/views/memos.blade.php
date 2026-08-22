@@ -10,6 +10,19 @@
 
     <div class="container">
     <h1>メモ一覧</h1>
+
+    <div class="user-area">
+    <p class="login-user">
+        ログイン中：{{ Auth::user()->name }}
+    </p>
+
+     <form action="{{ route('logout') }}" method="POST">
+        @csrf
+        <button type="submit" class="logout-button">
+            ログアウト
+        </button>
+    </form>
+    </div>
     @if (session('success'))
         <div class="success-message">
             {{ session('success') }}

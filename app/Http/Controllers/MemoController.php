@@ -12,7 +12,7 @@ class MemoController extends Controller
     public function index(Request $request){
         $keyword = $request->keyword;
         $categoryId = $request->category_id;
-        $query = Memo::query();
+        $query = Memo::where('user_id', $request->user()->id);
         if(!empty($keyword)){
             $query->where(function ($q) use ($keyword){
             $q->where('title', 'like', '%' . $keyword . '%')
@@ -55,6 +55,7 @@ class MemoController extends Controller
     ]);
 
     Memo::create([
+        'user_id' => $request->user()->id,
         'category_id' => $request->category_id,
         'title' => $request->title,
         'content' => $request->content
@@ -63,8 +64,10 @@ class MemoController extends Controller
         ->with('success','メモを登録しました。');
     }
 
-    public function edit($id){
-    $memo = Memo::find($id);
+    public function edit(Request $request,$id){
+    $memo = Memo::where('id', $id)
+        ->where('user_id', $request->user()->id)
+        ->firstOrFail();
     $categories = Category::all();
     return view('memo_edit', compact('memo','categories'));
     }
@@ -82,7 +85,9 @@ class MemoController extends Controller
         'content.required'=>'内容は必須です。',
         'content.max' => '内容は1000文字以内で入力してください。',
     ]);
-    $memo = Memo::find($id);
+    $memo = Memo::where('id', $id)
+        ->where('user_id', $request->user()->id)
+        ->firstOrFail();
     $memo->update([
         'category_id' => $request->category_id,
         'title' => $request->title,
@@ -92,8 +97,10 @@ class MemoController extends Controller
         ->with('success', 'メモを更新しました。');
     }
 
-    public function destroy($id){
-    $memo = Memo::find($id);
+    public function destroy(Request $request,$id){
+    $memo = Memo::where('id', $id)
+        ->where('user_id', $request->user()->id)
+        ->firstOrFail();
     $memo->delete();
     return redirect()->route('memos.index')
         ->with('success', 'メモを削除しました。');
