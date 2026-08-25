@@ -1,7 +1,10 @@
 import './bootstrap';
 
-import Alpine from 'alpinejs';
+import { createApp } from 'vue';
+import HelloVue from './components/HelloVue.vue';
 
-window.Alpine = Alpine;
+const vueElement = document.getElementById('vue-app');
 
-Alpine.start();
+if (vueElement) {
+createApp(HelloVue).mount(vueElement);
+}
