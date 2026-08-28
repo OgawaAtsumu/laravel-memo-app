@@ -85,6 +85,10 @@ Route::middleware('auth')->group(function () {
         [\App\Http\Controllers\Api\MemoApiController::class, 'destroy']
     )->name('api-test.memos.destroy');
 
+    Route::get('/vue-memos', function () {
+        return view('vue_memos');
+    })->name('vue.memos');
+
 });
 
 /*
